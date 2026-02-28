@@ -1,7 +1,7 @@
 {
-  "name": "com.PurCell.AutoTileOverride",
+  "name": "com.purcell.autotileoverride",
   "version": "0.1",
-  "displayName": "Auto Tile Override by PurCell",
+  "displayName": "Auto Tile Override",
   "description": "An Auto Tile that matches neighbors by keyword rather than type.",
   "unity": "6000.3.9f1",
   "licensesUrl": "https://github.com/Pur-Cell/AutoTileOverride/blob/main/LICENSE",
