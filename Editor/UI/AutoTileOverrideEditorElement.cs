@@ -53,6 +53,7 @@ namespace PurCell
         {
             var defaultProperties = new VisualElement();
             
+            // Tile Keyword Properties
             var defaultTileKeyword = new TextField("Tile Keyword");
             defaultTileKeyword.bindingPath = "TileKeyword";
             defaultTileKeyword.tooltip = Styles.defaultKeywordTooltip;

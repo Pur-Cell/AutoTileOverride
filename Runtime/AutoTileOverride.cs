@@ -10,7 +10,25 @@ namespace PurCell
     [CreateAssetMenu(fileName = "New Auto Tile Override", menuName = "2D/Tiles/Auto Tile Override")]
     public class AutoTileOverride : TileBase
     {
+        // This is the keyword that will be used to match tiles for autotiling.
+        // If you want to modify the auto tile logic, you can change the matching
+        // logic in the GetTileData method to use some other property instead of
+        // this keyword.
+        // You will also need to change the AutoTileOverrideEditorElement.cs script
+        // to allow setting this property in the inspector.
+
         public string TileKeyword = "";
+
+        public virtual bool MatchesTile(TileBase otherTile)
+        {
+            if(otherTile is AutoTileOverride autoTile && autoTile.TileKeyword == TileKeyword)
+                return true;
+            else
+                return false;
+        }
+
+        
+
         [Serializable]
         public abstract class SerializedDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
         {
@@ -149,12 +167,18 @@ namespace PurCell
                     Vector3Int position2 = new Vector3Int(position.x + j, position.y + i, position.z);
                     m_CachedTiles[num2] = itilemap.GetTile(position2);
 
-                    // Matching tile logic
-                    //if (m_CachedTiles[num2] == this)
-                    if(m_CachedTiles[num2] is AutoTileOverride autoTile && autoTile.TileKeyword == TileKeyword)
+                    // Matching logic
+
+                    if (MatchesTile(m_CachedTiles[num2]))
                     {
                         num |= (uint)(1 << num2);
                     }
+
+                    // Original AutoTile logic (commented out)
+                    //if (m_CachedTiles[num2] == this)
+                    //{
+                    //    num |= (uint)(1 << num2);
+                    //}
 
                     num2++;
                 }
