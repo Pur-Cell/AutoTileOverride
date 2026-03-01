@@ -63,25 +63,21 @@ namespace PurCell
         {
         }
 
-        //public enum AutoTileMaskType
-        //{
-        //    Mask_2x2,
-        //    Mask_3x3
-        //}
+
 
         public static readonly float s_DefaultTextureScale = 1f;
 
         [SerializeField]
-        public Sprite m_DefaultSprite;
+        public Sprite DefaultSprite;
 
         [SerializeField]
-        public GameObject m_DefaultGameObject;
+        public GameObject DefaultGameObject;
 
         [SerializeField]
-        public Tile.ColliderType m_DefaultColliderType = Tile.ColliderType.Sprite;
+        public Tile.ColliderType DefaultColliderType = Tile.ColliderType.Sprite;
 
         [SerializeField]
-        public AutoTileMaskType m_MaskType;
+        public AutoTileMaskType MaskType = AutoTileMaskType.Mask_3x3;
 
         [SerializeField]
         private bool m_Random;
@@ -94,10 +90,10 @@ namespace PurCell
         public AutoTileDictionary m_AutoTileDictionary = new AutoTileDictionary();
 
         [SerializeField]
-        public List<Texture2D> m_TextureList = new List<Texture2D>();
+        public List<Texture2D> TextureList = new List<Texture2D>();
 
         [SerializeField]
-        public List<float> m_TextureScaleList = new List<float>();
+        public List<float> TextureScaleList = new List<float>();
 
         private readonly TileBase[] m_CachedTiles = new TileBase[9];
 
@@ -139,9 +135,9 @@ namespace PurCell
         public override void GetTileData(Vector3Int position, ITilemap itilemap, ref TileData tileData)
         {
             Matrix4x4 identity = Matrix4x4.identity;
-            tileData.sprite = m_DefaultSprite;
-            tileData.gameObject = m_DefaultGameObject;
-            tileData.colliderType = m_DefaultColliderType;
+            tileData.sprite = DefaultSprite;
+            tileData.gameObject = DefaultGameObject;
+            tileData.colliderType = DefaultColliderType;
             tileData.flags = TileFlags.LockAll;
             tileData.transform = identity;
             uint num = 0u;
@@ -164,7 +160,7 @@ namespace PurCell
                 }
             }
 
-            AutoTileMaskType maskType = m_MaskType;
+            AutoTileMaskType maskType = MaskType;
             if (1 == 0)
             {
             }
@@ -182,7 +178,7 @@ namespace PurCell
             num = num3;
             if (m_AutoTileDictionary.TryGetValue(num, out var value))
             {
-                Sprite sprite = m_DefaultSprite;
+                Sprite sprite = DefaultSprite;
                 if (value.spriteList.Count > 0)
                 {
                     if (m_Random)
@@ -215,9 +211,9 @@ namespace PurCell
 
         public void AddSprite(Sprite sprite, Texture2D texture, uint mask)
         {
-            if ((m_MaskType == AutoTileMaskType.Mask_2x2 && mask >> 4 != 0) || mask >> 9 != 0)
+            if ((MaskType == AutoTileMaskType.Mask_2x2 && mask >> 4 != 0) || mask >> 9 != 0)
             {
-                throw new ArgumentOutOfRangeException($"Mask {mask} is not valid for {m_MaskType}");
+                throw new ArgumentOutOfRangeException($"Mask {mask} is not valid for {MaskType}");
             }
 
             if (!m_AutoTileDictionary.TryGetValue(mask, out var value))
@@ -258,7 +254,7 @@ namespace PurCell
 
         public void Validate()
         {
-            if (m_MaskType == AutoTileMaskType.Mask_2x2)
+            if (MaskType == AutoTileMaskType.Mask_2x2)
             {
                 List<uint> list = new List<uint>(m_AutoTileDictionary.Keys);
                 foreach (uint item2 in list)
@@ -278,7 +274,7 @@ namespace PurCell
                 {
                     Sprite sprite = value.spriteList[num];
                     Texture2D item = value.textureList[num];
-                    if (m_TextureList.Contains(item))
+                    if (TextureList.Contains(item))
                     {
                         num++;
                         continue;
@@ -289,23 +285,23 @@ namespace PurCell
                 }
             }
 
-            if (m_TextureList.Count == m_TextureScaleList.Count)
+            if (TextureList.Count == TextureScaleList.Count)
             {
                 return;
             }
 
-            if (m_TextureList.Count > m_TextureScaleList.Count)
+            if (TextureList.Count > TextureScaleList.Count)
             {
-                while (m_TextureList.Count - m_TextureScaleList.Count > 0)
+                while (TextureList.Count - TextureScaleList.Count > 0)
                 {
-                    m_TextureScaleList.Add(s_DefaultTextureScale);
+                    TextureScaleList.Add(s_DefaultTextureScale);
                 }
             }
-            else if (m_TextureList.Count < m_TextureScaleList.Count)
+            else if (TextureList.Count < TextureScaleList.Count)
             {
-                while (m_TextureScaleList.Count - m_TextureList.Count > 0)
+                while (TextureScaleList.Count - TextureList.Count > 0)
                 {
-                    m_TextureScaleList.RemoveAt(m_TextureScaleList.Count - 1);
+                    TextureScaleList.RemoveAt(TextureScaleList.Count - 1);
                 }
             }
         }

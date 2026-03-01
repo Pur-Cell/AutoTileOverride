@@ -1,6 +1,6 @@
 {
   "name": "com.purcell.autotileoverride",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayName": "Auto Tile Override",
   "description": "An Auto Tile that matches neighbors by keyword rather than type.",
   "unity": "6000.3",

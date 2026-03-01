@@ -123,9 +123,9 @@ namespace PurCell
             if (autoTile == null)
                 return;
 
-            m_PhysicsShapeCheckToggle.SetEnabled(autoTile.m_DefaultColliderType == Tile.ColliderType.Sprite);
+            m_PhysicsShapeCheckToggle.SetEnabled(autoTile.DefaultColliderType == Tile.ColliderType.Sprite);
 
-            m_TextureList.itemsSource = m_AutoTile.m_TextureList;
+            m_TextureList.itemsSource = m_AutoTile.TextureList;
             m_TextureList.Rebuild();
             m_TextureList.RefreshItems();
             PopulateTextureScrollView();
@@ -176,7 +176,7 @@ namespace PurCell
         private void BindTextureItem(VisualElement ve, int index)
         {
             var of = ve.Q<ObjectField>();
-            of.SetValueWithoutNotify(m_AutoTile.m_TextureList[index]);
+            of.SetValueWithoutNotify(m_AutoTile.TextureList[index]);
             EventCallback<ChangeEvent<UnityEngine.Object>> callback = evt =>
                 TexturePropertyChanged(index, (Texture2D)evt.newValue);
             of.RegisterValueChangedCallback(callback);
@@ -191,11 +191,11 @@ namespace PurCell
 
         private void TexturePropertyChanged(int index, Texture2D texture2D)
         {
-            if (m_AutoTile.m_TextureList[index] == texture2D)
+            if (m_AutoTile.TextureList[index] == texture2D)
                 return;
 
-            m_AutoTile.m_TextureList[index] = texture2D;
-            m_AutoTile.m_TextureScaleList[index] = AutoTileOverride.s_DefaultTextureScale;
+            m_AutoTile.TextureList[index] = texture2D;
+            m_AutoTile.TextureScaleList[index] = AutoTileOverride.s_DefaultTextureScale;
             TexturesChanged();
         }
 
@@ -207,7 +207,7 @@ namespace PurCell
             if (m_TextureList.itemsSource == null)
                 return;
 
-            var count = Math.Min(m_AutoTile.m_TextureScaleList.Count, m_TextureList.itemsSource.Count);
+            var count = Math.Min(m_AutoTile.TextureScaleList.Count, m_TextureList.itemsSource.Count);
             for (var i = 0; i < count; ++i)
             {
                 var texture2D = m_TextureList.itemsSource[i] as Texture2D;
@@ -218,7 +218,7 @@ namespace PurCell
                     continue;
 
                 var ve = new VisualElement();
-                var at = new AutoTileOverrideTextureSource(texture2D, autoTile.m_MaskType, MaskChanged, SaveTile);
+                var at = new AutoTileOverrideTextureSource(texture2D, autoTile.MaskType, MaskChanged, SaveTile);
                 textureToElementMap.Add(texture2D, at);
 
                 var he = new VisualElement();
@@ -231,10 +231,10 @@ namespace PurCell
                     var template = AutoTileTemplateUtility.LoadTemplateFromFile();
                     if (template != null)
                     {
-                        if (autoTile.m_MaskType != template.maskType)
+                        if (autoTile.MaskType != template.maskType)
                         {
                             throw new InvalidOperationException(
-                                $"AutoTile Mask '{autoTile.m_MaskType}' does not match Template Mask '{template.maskType}'");
+                                $"AutoTile Mask '{autoTile.MaskType}' does not match Template Mask '{template.maskType}'");
                         }
 
                         at.ClearMaskForTextureSource();
@@ -251,7 +251,7 @@ namespace PurCell
                 {
                     AutoTileTemplateUtility.SaveTemplateToFile(texture2D.width
                         , texture2D.height
-                        , autoTile.m_MaskType
+                        , autoTile.MaskType
                         , at.GetSpriteData());
                 });
                 saveButton.text = "Save";
@@ -262,7 +262,7 @@ namespace PurCell
                 var start = 0.5f;
                 if (minLength > 512.0f)
                     start = 256.0f / minLength;
-                var sliderValue = Math.Min(Mathf.Max(start, m_AutoTile.m_TextureScaleList[i]), s_MaxSliderScale);
+                var sliderValue = Math.Min(Mathf.Max(start, m_AutoTile.TextureScaleList[i]), s_MaxSliderScale);
                 var slider = new Slider("Scale", start, s_MaxSliderScale, SliderDirection.Horizontal, 0.1f);
                 slider.name = "ScaleSlider";
                 slider.style.flexGrow = 0.9f;
@@ -271,7 +271,7 @@ namespace PurCell
                 slider.RegisterValueChangedCallback(evt =>
                 {
                     at.ChangeScale(evt.newValue);
-                    m_AutoTile.m_TextureScaleList[(int)slider.userData] = evt.newValue;
+                    m_AutoTile.TextureScaleList[(int)slider.userData] = evt.newValue;
                     SaveTile();
                 });
                 he.Add(slider);
@@ -351,7 +351,7 @@ namespace PurCell
         {
             // Note: m_AutoTile.m_TextureList is increased before this method
             foreach (var i in insertions)
-                m_AutoTile.m_TextureScaleList.Insert(i, AutoTileOverride.s_DefaultTextureScale);
+                m_AutoTile.TextureScaleList.Insert(i, AutoTileOverride.s_DefaultTextureScale);
             SaveTile();
             m_TextureList.schedule.Execute(UpdateTextureList);
         }
@@ -360,14 +360,14 @@ namespace PurCell
         {
             // Note: m_AutoTile.m_TextureList is reduced after this method ends
             int count = 0;
-            NativeArray<int> removalNative = new NativeArray<int>(m_AutoTile.m_TextureScaleList.Count, Allocator.Temp);
+            NativeArray<int> removalNative = new NativeArray<int>(m_AutoTile.TextureScaleList.Count, Allocator.Temp);
             foreach (var i in removals)
             {
                 removalNative[count++] = i;
             }
             for (var idx = count - 1; idx >= 0; idx--)
             {
-                m_AutoTile.m_TextureScaleList.RemoveAt(removalNative[idx]);
+                m_AutoTile.TextureScaleList.RemoveAt(removalNative[idx]);
             }
             removalNative.Dispose();
 
