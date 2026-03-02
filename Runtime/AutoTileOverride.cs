@@ -12,7 +12,7 @@ namespace PurCell
     {
         // This is the keyword that will be used to match tiles for autotiling.
         // If you want to modify the auto tile logic, you can change the matching
-        // logic in the GetTileData method to use some other property instead of
+        // logic in the MatchesTile() method to use some other property instead of
         // this keyword.
         // You will also need to change the AutoTileOverrideEditorElement.cs script
         // to allow setting this property in the inspector.
