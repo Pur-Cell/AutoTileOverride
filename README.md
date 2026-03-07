@@ -1,4 +1,4 @@
-![alt text](https://github.com/Pur-Cell/AutoTileOverride/blob/main/Images/Example.png "Before and after AutoTileOverride") 
+![alt text](https://github.com/Pur-Cell/AutoTileOverride/blob/main/Images/Example2.png "Before and after AutoTileOverride") 
 
 To add an AutoTileOverride into your project: right-click > 2D > Auto Tile Override.
 
