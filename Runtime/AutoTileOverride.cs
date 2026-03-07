@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEngine.Tilemaps.AutoTile;
@@ -27,7 +28,27 @@ namespace PurCell
                 return false;
         }
 
-        
+        public Sprite GetSoloOrDefaultSprite()
+        {
+            if (DefaultSprite != null)
+            {
+                return DefaultSprite;
+            }
+            else if(m_AutoTileDictionary != null)
+            {
+                uint maskToCheck = (MaskType == AutoTileMaskType.Mask_2x2) ? 0u : 16u;
+
+                if (m_AutoTileDictionary.TryGetValue(maskToCheck, out AutoTileOverrideData tileData))
+                {
+                    if (tileData.spriteList.Count > 0)
+                    {
+                        return tileData.spriteList[0];
+                    }
+                }
+            }
+
+            return null;
+        }
 
         [Serializable]
         public abstract class SerializedDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
@@ -185,9 +206,9 @@ namespace PurCell
             }
 
             AutoTileMaskType maskType = MaskType;
-            if (1 == 0)
-            {
-            }
+            //if (1 == 0)
+            //{
+            //}
 
             uint num3 = maskType switch
             {
@@ -200,7 +221,7 @@ namespace PurCell
             }
 
             num = num3;
-            if (m_AutoTileDictionary.TryGetValue(num, out var value))
+            if (m_AutoTileDictionary.TryGetValue(num, out AutoTileOverrideData value))
             {
                 Sprite sprite = DefaultSprite;
                 if (value.spriteList.Count > 0)

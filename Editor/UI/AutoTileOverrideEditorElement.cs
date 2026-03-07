@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEditor;
 using UnityEditor.Tilemaps;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
+
 
 namespace PurCell
 {
@@ -61,18 +62,18 @@ namespace PurCell
 
             var defaultSprite = new ObjectField("Default Sprite");
             defaultSprite.objectType = typeof(Sprite);
-            defaultSprite.bindingPath = "m_DefaultSprite";
+            defaultSprite.bindingPath = "DefaultSprite";
             defaultSprite.tooltip = Styles.defaultSpriteTooltip;
             defaultProperties.Add(defaultSprite);
 
             var defaultGameObject = new ObjectField("Default GameObject");
             defaultGameObject.objectType = typeof(GameObject);
-            defaultGameObject.bindingPath = "m_DefaultGameObject";
+            defaultGameObject.bindingPath = "DefaultGameObject";
             defaultGameObject.tooltip = Styles.defaultGameObjectTooltip;
             defaultProperties.Add(defaultGameObject);
 
             var tileColliderType = new EnumField("Tile Collider");
-            tileColliderType.bindingPath = "m_DefaultColliderType";
+            tileColliderType.bindingPath = "DefaultColliderType";
             tileColliderType.tooltip = Styles.tileColliderTooltip;
             tileColliderType.RegisterValueChangedCallback(ColliderTypeChanged);
             defaultProperties.Add(tileColliderType);
@@ -84,7 +85,7 @@ namespace PurCell
             defaultProperties.Add(m_PhysicsShapeCheckToggle);
 
             var maskType = new EnumField("Mask Type");
-            maskType.bindingPath = "m_MaskType";
+            maskType.bindingPath = "MaskType";
             maskType.tooltip = Styles.maskTypeTooltip;
             maskType.RegisterValueChangedCallback(MaskTypeChanged);
             defaultProperties.Add(maskType);
