@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2038f59f9302f9b4582d59e76425a13b, type: 3}
-  m_Name: Sloped Wall
+  m_Name: AutoTileOverride_Walls
   m_EditorClassIdentifier: PurCell.AutoTileOverride::PurCell.AutoTileOverride
   TileKeyword: SlopedWalls
   DefaultSprite: {fileID: 0}

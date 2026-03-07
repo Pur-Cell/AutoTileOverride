@@ -21,7 +21,7 @@ namespace PurCell
 
         private static class Styles
         {
-            public static readonly string defaultKeywordTooltip = L10n.Tr("String keyword use to match other AutoTileOverrides. Keyword must match exactly.");
+            public static readonly string defaultKeywordTooltip = L10n.Tr("String keyword use to match other AutoTileOverrides. Keyword must match exactly. Empty keyword will only match itself.");
             public static readonly string defaultSpriteTooltip = L10n.Tr("The Sprite set when there are no matches.");
             public static readonly string defaultGameObjectTooltip = L10n.Tr("The GameObject instantiated when set on the Tilemap.");
             public static readonly string tileColliderTooltip = L10n.Tr("The Collider Type used for generating colliders.");

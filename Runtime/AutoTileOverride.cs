@@ -22,7 +22,12 @@ namespace PurCell
 
         public virtual bool MatchesTile(TileBase otherTile)
         {
-            if(otherTile is AutoTileOverride autoTile && autoTile.TileKeyword == TileKeyword)
+            if (TileKeyword == "")
+            {
+                return otherTile == this;
+            }
+
+            if (otherTile is AutoTileOverride autoTile && autoTile.TileKeyword == TileKeyword)
                 return true;
             else
                 return false;
