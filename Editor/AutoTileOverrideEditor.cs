@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 namespace PurCell
 {
     /// <summary>
-    /// Editor for AutoTile.
+    /// Editor for AutoTileOverride.
     /// </summary>
     [CustomEditor(typeof(AutoTileOverride))]
     public class AutoTileOverrideEditor : Editor
@@ -18,7 +18,7 @@ namespace PurCell
         private AutoTileOverride autoTile => target as AutoTileOverride;
 
         /// <summary>
-        /// Creates a VisualElement for AutoTile Editor.
+        /// Creates a VisualElement for AutoTileOverride Editor.
         /// </summary>
         /// <returns>A VisualElement for AutoTile Editor.</returns>
         public override VisualElement CreateInspectorGUI()
@@ -29,28 +29,26 @@ namespace PurCell
 
             return autoTileEditorElement;
         }
-        
+
         public override Texture2D RenderStaticPreview(string assetPath, Object[] subAssets, int width, int height)
         {
-            //if (autoTile.DefaultSprite != null)
-            //{
-                var t = GetType("UnityEditor.SpriteUtility");
-                if (t != null)
+            var t = GetType("UnityEditor.SpriteUtility");
+            if (t != null)
+            {
+                var method = t.GetMethod("RenderStaticPreview",
+                    new[] { typeof(Sprite), typeof(Color), typeof(int), typeof(int) });
+                if (method != null)
                 {
-                    var method = t.GetMethod("RenderStaticPreview",
-                        new[] { typeof(Sprite), typeof(Color), typeof(int), typeof(int) });
-                    if (method != null)
-                    {
-                        var ret = method.Invoke("RenderStaticPreview",
-                            new object[] { autoTile.GetSoloOrDefaultSprite(), Color.white, width, height });
-                        if (ret is Texture2D)
-                            return ret as Texture2D;
-                    }
+                    var ret = method.Invoke("RenderStaticPreview",
+                        new object[] { autoTile.GetSoloOrDefaultSprite(), Color.white, width, height });
+                    if (ret is Texture2D)
+                        return ret as Texture2D;
                 }
-            //}
+            }
 
             return base.RenderStaticPreview(assetPath, subAssets, width, height);
         }
+
 
         private static Type GetType(string typeName)
         {
