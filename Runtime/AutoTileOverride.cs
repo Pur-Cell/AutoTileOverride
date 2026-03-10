@@ -8,6 +8,7 @@ using  Random = UnityEngine.Random;
 
 namespace PurCell
 {
+    [Icon("Packages/Auto Tile Override/Editor/Icons/AutoTileOverride Icon.png")]
     [CreateAssetMenu(fileName = "New Auto Tile Override", menuName = "2D/Tiles/Auto Tile Override")]
     public class AutoTileOverride : TileBase
     {

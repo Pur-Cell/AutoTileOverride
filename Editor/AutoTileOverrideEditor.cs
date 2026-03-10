@@ -17,6 +17,7 @@ namespace PurCell
     {
         private AutoTileOverride autoTile => target as AutoTileOverride;
 
+
         /// <summary>
         /// Creates a VisualElement for AutoTileOverride Editor.
         /// </summary>
@@ -26,6 +27,7 @@ namespace PurCell
             var autoTileEditorElement = new AutoTileOverrideEditorElement();
             autoTileEditorElement.Bind(serializedObject);
             autoTileEditorElement.autoTile = autoTile;
+
 
             return autoTileEditorElement;
         }
@@ -48,7 +50,6 @@ namespace PurCell
 
             return base.RenderStaticPreview(assetPath, subAssets, width, height);
         }
-
 
         private static Type GetType(string typeName)
         {
